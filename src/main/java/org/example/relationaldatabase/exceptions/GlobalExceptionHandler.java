@@ -19,6 +19,7 @@ import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.context.request.async.AsyncRequestNotUsableException;
@@ -34,7 +35,15 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(PropertyValueException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Object propertyValueException(PropertyValueException ex) {
+        InvalidDataException invalidDataException = new InvalidDataException("Field '" + ex.getPropertyName() + "' is required.");
+        return InvalidDataException(invalidDataException);
+    }
+
+
+    @ExceptionHandler(InvalidDataException.class)
+    public Object InvalidDataException(InvalidDataException ex) {
         return new ErrorModel(ex.getMessage(), 400);
     }
 
