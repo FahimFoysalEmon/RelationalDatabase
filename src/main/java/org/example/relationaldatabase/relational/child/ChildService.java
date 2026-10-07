@@ -1,6 +1,7 @@
 package org.example.relationaldatabase.relational.child;
 
 import lombok.RequiredArgsConstructor;
+import org.example.relationaldatabase.exceptions.InvalidDataException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

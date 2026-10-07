@@ -14,7 +14,7 @@ public class ChildController {
     private final ChildService childService;
 
     @PostMapping(value = "/api/save/child")
-    public Child saveChild(@RequestBody Child child){
+    public Child saveChild(@RequestBody Child child) {
         return childService.saveChild(child);
     }
 
