@@ -6,6 +6,7 @@ import org.jspecify.annotations.Nullable;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.context.MessageSource;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
@@ -33,6 +34,14 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Object dataIntegrityViolationException(DataIntegrityViolationException ex) {
+        InvalidDataException wrappedException = new InvalidDataException("The provided parent ID does not exist.");
+        return InvalidDataException(wrappedException);
+    }
 
     @ExceptionHandler(PropertyValueException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
